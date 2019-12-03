@@ -3,7 +3,7 @@
 //In the background, it should also update our user records about search activity
 //In the background, it should also update our public records about search activity
 
- function twitterStepOne(searchTerm) {
+function twitterStepOne(searchTerm) {
     alert("Twitter Step One is Calling with Search Term " + searchTerm);
 
     return "This is Tweet Data";
@@ -11,7 +11,7 @@
 
 //This function will use the SMMRY API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
 
- function twitterStepTwo(tweetData) {
+function twitterStepTwo(tweetData) {
     alert("Twitter Step Two is Calling with Tweet Data " + tweetData);
 
     return "This is a Summary";
@@ -27,7 +27,7 @@ function twitterStepThree(summary) {
 
 //This function will control generating the Tweet summary by calling twitterStepOne(), Two(), and Three()
 
- function summaryGenerate() {
+function summaryGenerate() {
     let searchTerm = $("#hashtaginput").val();
     console.log(searchTerm);
     let firstresult = twitterStepOne(searchTerm);
@@ -38,7 +38,7 @@ function twitterStepThree(summary) {
 
 //This function will bring up a "Log In" Box
 
-function logInInit () {
+function logInInit() {
 
 }
 
@@ -47,13 +47,13 @@ function logInInit () {
 //In the background, it should also update our user records about user's last log in
 //In the background, it should also update our public records about how many users are logged in
 
-function logInConc () {
+function logInConc() {
 
 }
 
 //This function will bring up a "Sign Up" Box
 
-function signUpInit () {
+function signUpInit() {
 
 }
 
@@ -61,7 +61,7 @@ function signUpInit () {
 //In the background, it should also update our private records about user activity
 //In the background, it should also update our public records about how many users are registered
 
-function signUpConc () {
+function signUpConc() {
 
 }
 
@@ -72,3 +72,5 @@ function addObservers() {
 }
 
 addObservers();
+
+// test
