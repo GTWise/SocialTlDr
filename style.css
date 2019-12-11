@@ -86,3 +86,11 @@ body{
     margin: auto;
     padding-bottom: 15px;
 }
+
+input[type=button], #headertext, #login {
+    cursor: pointer;
+}
+
+#tagline {
+    cursor: default;
+}
