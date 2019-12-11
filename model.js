@@ -5,14 +5,39 @@
  */
 
 
-// Firebase tests
+// Firebase CRUD tests
 var database = firebase.database();
 
+// NOTE: path must always be passed as a string
+
+// To read
+async function readData(path) {
+    var result;
+    await database.ref(path).once('value').then(function (snapshot) {
+        result = snapshot.val();
+    });
+    return result;
+}
+
+// To write
+function writeData(path, value) {
+    database.ref(path).set(value);
+}
+
+// To delete
+function deleteData(path) {
+    database.ref(path).remove()
+}
+
+// To update
+function updateData(path, value) {
+    var updates = {};
+    updates[path] = value;
+    database.ref().update(updates)
+}
 
 async function readUserData(username, callback) {
-
     await database.ref('user/' + username).on('value', callback);
-
 }
 
 function printUserData(snapshot) {
