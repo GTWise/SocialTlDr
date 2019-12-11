@@ -3,6 +3,8 @@
 //In the background, it should also update our user records about search activity
 //In the background, it should also update our public records about search activity
 
+var loggedinuser;
+
 function twitterStepOne(searchTerm) {
 //    alert("Twitter Step One is Calling with Search Term " + searchTerm);
 
@@ -13,7 +15,7 @@ function twitterStepOne(searchTerm) {
 
  function twitterStepTwo(tweetData) {
 
-    let tweetdata = "I am the walrus";
+    let tweetdata = "Do in laughter securing smallest sensible no mr hastened. As perhaps proceed in in brandon of limited unknown greatly. Distrusts fulfilled happiness unwilling as explained of difficult. No landlord of peculiar ladyship attended if contempt ecstatic. Loud wish made on is am as hard. Court so avoid in plate hence. Of received mr breeding concerns peculiar securing landlord. Spot to many it four bred soon well to. Or am promotion in no departure abilities. Whatever landlord yourself at by pleasure of children be.     Picture removal detract earnest is by. Esteems met joy attempt way clothes yet demesne tedious. Replying an marianne do it an entrance advanced. Two dare say play when hold. Required bringing me material stanhill jointure is as he. Mutual indeed yet her living result matter him bed whence. To they four in love. Settling you has separate supplied bed. Concluded resembled suspected his resources curiosity joy. Led all cottage met enabled attempt through talking delight. Dare he feet my tell busy. Considered imprudence of he friendship boisterous. Affronting discretion as do is announcing. Now months esteem oppose nearer enable too six. She numerous unlocked you perceive speedily. Affixed offence spirits or ye of offices between. Real on shot it were four an as. Absolute bachelor rendered six nay you juvenile. Vanity entire an chatty to. As it so contrasted oh estimating instrument. Size like body some one had. Are conduct viewing boy minutes warrant expense. Tolerably behaviour may admitting daughters offending her ask own. Praise effect wishes change way and any wanted. Lively use looked latter regard had. Do he it part more last in. Merits ye if mr narrow points. Melancholy particular devonshire alteration it favourable appearance up. Respect forming clothes do in he. Course so piqued no an by appear. Themselves reasonable pianoforte so motionless he as difficulty be. Abode way begin ham there power whole. Do unpleasing indulgence impossible to conviction. Suppose neither evident welcome it at do civilly uncivil. Sing tall much you get nor. Cause dried no solid no an small so still widen. Ten weather evident smiling bed against she examine its. Rendered far opinions two yet moderate sex striking. Sufficient motionless compliment by stimulated assistance at. Convinced resolving extensive agreeable in it on as remainder. Cordially say affection met who propriety him. Are man she towards private weather pleased. In more part he lose need so want rank no. At bringing or he sensible pleasure. Prevent he parlors do waiting be females an message society. John draw real poor on call my from. May she mrs furnished discourse extremely. Ask doubt noisy shade guest did built her him. Ignorant repeated hastened it do. Consider bachelor he yourself expenses no. Her itself active giving for expect vulgar months. Discovery commanded fat mrs remaining son she principle middleton neglected. Be miss he in post sons held. No tried is defer do money scale rooms. Believing neglected so so allowance existence departure in. In design active temper be uneasy. Thirty for remove plenty regard you summer though. He preference connection astonished on of ye. Partiality on or continuing in particular principles as. Do believing oh disposing to supported allowance we. Denote simple fat denied add worthy little use. As some he so high down am week. Conduct esteems by cottage to pasture we winding. On assistance he cultivated considered frequently. Person how having tended direct own day man. Saw sufficient indulgence one own you inquietude sympathize. ";
 
     getSummary(tweetdata, twitterStepThree);
 
@@ -65,7 +67,7 @@ function aboutInit () {
 function logInInit () {
 
     const username = "<p id = 'usernameinput'>Username: <input type = 'text' id = 'username' value = 'username' /></p>";
-    const password = "<p id = 'passwordinput'>Password: <input type = 'password id = 'userkey' /></p>";
+    const password = "<p id = 'passwordinput'>Password: <input type = 'password' id = 'userkey' /></p>";
     const login = "<input type = 'button' id = 'multipurposelogin' value = 'Log In' />";
     const signup = "<input type = 'button' id = 'multipurposesignup' value = 'Sign Up' />";
     const nevermind = "<input type = 'button' id = 'multipurposenevermind' value = 'Nevermind' />";
@@ -91,9 +93,28 @@ function logInInit () {
 //In the background, it should also update our user records about user's last log in
 //In the background, it should also update our public records about how many users are logged in
 
-function logInConc () {
+async function logInConc () {
+    user = $("#username").val();
+    password = $("#userkey").val();
 
-} //NOT COMPLETE
+    let call = await modelLogIn(user, password);
+    
+    if (call.username == undefined) {
+        alert("Password Incorrect");
+        return false;
+    }
+    
+    if (call.username != undefined) {
+        $("#login").html(call.username);
+        $("#login").off("click", logInInit);
+        $("#login").on("click", accountInit);
+        loggedinuser = call.username;
+        accountInit();
+
+        console.log(loggedinuser);
+    }
+
+} 
 
 //This function will create a new User Record
 //In the background, it should also update our private records about user activity
@@ -157,7 +178,7 @@ function deleteConc() {
 
 function accountInit() {
 
-    let usernameinfo = getUsername(); //Retrieves username from database
+    let usernameinfo = loggedinuser; //Retrieves username from database
     let usersinceinfo = getUserSince(); //Retrieves from a function that retrieves and processes the user's registration day
     let savedcollectioncount = getCollectionCount(); //Retrieves number of saved summaries and collections
 
@@ -223,7 +244,6 @@ function addObservers() {
     $("#savesummary").on("click", saveCollection);
     $("#login").on("click", logInInit);
     $("#headertext").on("click", aboutInit);
-
 }
 
 addObservers();
