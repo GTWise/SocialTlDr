@@ -40,35 +40,28 @@ async function readUserData(username, callback) {
     await database.ref('user/' + username).on('value', callback);
 }
 
-function printUserData(snapshot) {
-    let password = snapshot.val().password;
-    let summarycount = snapshot.val().summarycount;
-
-    console.log(password);
-    console.log(summarycount);
-}
-
-async function tester(user) {
-    let result = await modelLogIn(user, "nonsense");
-
-    console.log(result);
-}
-
 async function modelLogIn(user, password) {
     var result = {
         username: undefined,
         summarycount: undefined,
-        valid: false
+        valid: false,
+        wrongpassword: false
     };
-    
-    await database.ref('user/' + user).once('value').then(function(snapshot) {
+
+    await database.ref('user/' + user).once('value').then(function (snapshot) {
         let userpass = snapshot.val().password;
 
-        if (userpass == password) {
+        if (userpass != password) {
+            result.wrongpassword = true;
+        }
+
+        else if (userpass == password) {
             result.valid = true;
             result.summarycount = snapshot.val().summarycount;
             result.username = user;
         }
+    }).catch(function () {
+        alert('This account does not exist. You must sign up before you can log in.')
     });
     return result;
 }
