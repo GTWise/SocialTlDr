@@ -1,18 +1,23 @@
-//This function will use the Twitter API to retrieve a list of Tweets based on the searchTerm (hashtag)
-//In the background, it should also update our private records about search activity
-//In the background, it should also update our user records about search activity
-//In the background, it should also update our public records about search activity
+// This function will use the Twitter API to retrieve a list of Tweets based on the searchTerm (hashtag)
+// In the background, it should also update our private records about search activity
+// In the background, it should also update our user records about search activity
+// In the background, it should also update our public records about search activity
 
 var loggedinuser;
 
-function twitterStepOne(searchTerm) {
-//    alert("Twitter Step One is Calling with Search Term " + searchTerm);
+async function twitterStepOne(searchTerm) {
+    // Firebase impl
+    // read count value
+    var count = await readData('private/hashtags/' + searchTerm + '/count/');
+    count++;
+    // write/update to database
+    writeData('private/hashtags/' + searchTerm + '/count/', count);
 
+    // Twitter api impl
     return "This is Tweet Data";
 }
 
-//This function will use the MeaningCloud API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
-
+// This function will use the MeaningCloud API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
  function twitterStepTwo(tweetData) {
 
     let tweetdata = "Do in laughter securing smallest sensible no mr hastened. As perhaps proceed in in brandon of limited unknown greatly. Distrusts fulfilled happiness unwilling as explained of difficult. No landlord of peculiar ladyship attended if contempt ecstatic. Loud wish made on is am as hard. Court so avoid in plate hence. Of received mr breeding concerns peculiar securing landlord. Spot to many it four bred soon well to. Or am promotion in no departure abilities. Whatever landlord yourself at by pleasure of children be.     Picture removal detract earnest is by. Esteems met joy attempt way clothes yet demesne tedious. Replying an marianne do it an entrance advanced. Two dare say play when hold. Required bringing me material stanhill jointure is as he. Mutual indeed yet her living result matter him bed whence. To they four in love. Settling you has separate supplied bed. Concluded resembled suspected his resources curiosity joy. Led all cottage met enabled attempt through talking delight. Dare he feet my tell busy. Considered imprudence of he friendship boisterous. Affronting discretion as do is announcing. Now months esteem oppose nearer enable too six. She numerous unlocked you perceive speedily. Affixed offence spirits or ye of offices between. Real on shot it were four an as. Absolute bachelor rendered six nay you juvenile. Vanity entire an chatty to. As it so contrasted oh estimating instrument. Size like body some one had. Are conduct viewing boy minutes warrant expense. Tolerably behaviour may admitting daughters offending her ask own. Praise effect wishes change way and any wanted. Lively use looked latter regard had. Do he it part more last in. Merits ye if mr narrow points. Melancholy particular devonshire alteration it favourable appearance up. Respect forming clothes do in he. Course so piqued no an by appear. Themselves reasonable pianoforte so motionless he as difficulty be. Abode way begin ham there power whole. Do unpleasing indulgence impossible to conviction. Suppose neither evident welcome it at do civilly uncivil. Sing tall much you get nor. Cause dried no solid no an small so still widen. Ten weather evident smiling bed against she examine its. Rendered far opinions two yet moderate sex striking. Sufficient motionless compliment by stimulated assistance at. Convinced resolving extensive agreeable in it on as remainder. Cordially say affection met who propriety him. Are man she towards private weather pleased. In more part he lose need so want rank no. At bringing or he sensible pleasure. Prevent he parlors do waiting be females an message society. John draw real poor on call my from. May she mrs furnished discourse extremely. Ask doubt noisy shade guest did built her him. Ignorant repeated hastened it do. Consider bachelor he yourself expenses no. Her itself active giving for expect vulgar months. Discovery commanded fat mrs remaining son she principle middleton neglected. Be miss he in post sons held. No tried is defer do money scale rooms. Believing neglected so so allowance existence departure in. In design active temper be uneasy. Thirty for remove plenty regard you summer though. He preference connection astonished on of ye. Partiality on or continuing in particular principles as. Do believing oh disposing to supported allowance we. Denote simple fat denied add worthy little use. As some he so high down am week. Conduct esteems by cottage to pasture we winding. On assistance he cultivated considered frequently. Person how having tended direct own day man. Saw sufficient indulgence one own you inquietude sympathize. ";
@@ -21,16 +26,13 @@ function twitterStepOne(searchTerm) {
 
 }
 
-//This function will use jQuery to fill the textbox with the summary generated by twitterStepTwo()
-
+// This function will use jQuery to fill the textbox with the summary generated by twitterStepTwo()
 async function twitterStepThree(summaryresult) {
-//    alert("Twitter Step Three is Calling with Summary " + summary);
-
+    
     $("#delivery").val(summaryresult.summary);
 }
 
-//This function will control generating the Tweet summary by calling twitterStepOne(), Two(), and Three()
-
+// This function will control generating the Tweet summary by calling twitterStepOne(), Two(), and Three()
 function summaryGenerate() {
     let searchTerm = $("#hashtaginputbox").val();
     let firstresult = twitterStepOne(searchTerm);
@@ -38,8 +40,7 @@ function summaryGenerate() {
 
 }
 
-//This function will bring up a "Log In" Box
-
+// This function will bring up a "Log In" Box
 function aboutInit () {
 
     const aboutsiteone = "<p id = 'aboutsiteone'>#TL;DR allows you to keep up-to-date with ongoing global conversations on Twitter, while protecting your time from the endless hours lost through endless scrolling of social media.</p>";
@@ -59,11 +60,10 @@ function aboutInit () {
     $("#multipurposeinteractive").append(backtosite);
 
     $("#backtosite").on("click", nevermindConc);
-
+    
 }
 
-//This function will bring up a "Log In" Box
-
+// This function will bring up a "Log In" Box
 function logInInit () {
 
     const username = "<p id = 'usernameinput'>Username: <input type = 'text' id = 'username' value = 'username' /></p>";
@@ -88,12 +88,17 @@ function logInInit () {
 
 }
 
-//This function will log in a user via username and password
-//In the background, it should also update our private records about user activity
-//In the background, it should also update our user records about user's last log in
-//In the background, it should also update our public records about how many users are logged in
-
+// This function will log in a user via username and password
+// In the background, it should also update our private records about user activity
+// In the background, it should also update our user records about user's last log in
+// In the background, it should also update our public records about how many users are logged in
 async function logInConc () {
+    // Firebase impl
+    var count = await readData('public/logins/');
+    count++;
+    // write/update to database
+    writeData('public/logins/', count);
+    
     user = $("#username").val();
     password = $("#userkey").val();
 
@@ -116,22 +121,38 @@ async function logInConc () {
 
 } 
 
-//This function will create a new User Record
-//In the background, it should also update our private records about user activity
-//In the background, it should also update our public records about how many users are registered
+// This function will create a new User Record
+// In the background, it should also update our private records about user activity
+// In the background, it should also update our public records about how many users are registered
+async function signUpConc () {
+    // need jQuery object for username and password
 
-function signUpConc () {
+    // create user object
+    var user = {
+        username: { // 'username' will be grabbed by jQuery
+            password: 'userPassword', // will be grabbed by jQuery
+            registration: 0, // get date
+            savedSummaries: 'text',
+            summaryCount: 0
+        }
+    }
 
-} //NOT COMPLETE
+    // Increase accounts by 1
+    var count = await readData('public/accounts/');
+    count++;
+    updateData('public/accounts', count);
+    // write new user to database
+    writeData('user/', user)
+}
 
-//This function will retrieve the username from the database
+// This function will retrieve the username from the database
 function getUsername() {
 
     return "RandomGuy";
 
 } //NOT COMPLETE || DUMMY
 
-//This function will retrieve the user's registration date from the database, then return a user-readable date
+// This function will retrieve the user's registration date from the database, then return a user-readable date
 function getUserSince() {
 
         return "11/17/2019";
@@ -145,7 +166,7 @@ function getCollectionCount() {
 
 } //NOT COMPLETE || DUMMY
 
-//This function will bring up the delete user account box
+// This function will bring up the delete user account box
 function deleteInit() {
 
     let usernameinfo = getUsername(); //Retrieves username from database
@@ -169,13 +190,18 @@ function deleteInit() {
 
 }
 
-//This function will delete the user's account from the database
-function deleteConc() {
+// This function will delete the user's account from the database
+async function deleteConc(username) { // either need username to be passed as param, or use jQuery to grab username
+    // Firebase impl
+    deleteData('user/' + username);
+    // decrease accounts by 1
+    var count = await readData('public/accounts/');
+    count--;
+    updateData('public/accounts', count);
+    // NOTE: will decrease accounts by 1 even if user does not exist
+}
 
-} //NOT COMPLETE
-
-//This function will bring up a "Log In" Box
-
+// This function will bring up a "Log In" Box
 function accountInit() {
 
     let usernameinfo = loggedinuser; //Retrieves username from database
@@ -205,8 +231,7 @@ function accountInit() {
 
 }
 
-//This function clears and hides the multipurpose box
-
+// This function clears and hides the multipurpose box
 function nevermindConc () {
 
     $("#multipurposebox").css("display: block");
@@ -217,27 +242,24 @@ function nevermindConc () {
     $("#multipurposebox").css("display", "none");
 }
 
-//This function will create a new saved collection record under the User
+// This function will create a new saved collection record under the User
 function saveCollection () {
 
 } //NOT COMPLETE
 
-//This function will clear out the delivery box
-
+// This function will clear out the delivery box
 function clearDelivery () {
 
     $("#delivery").val('');
 
 }
 
-//Reads the user's collection of saved Summaries and displays an interactive list
-
+// Reads the user's collection of saved Summaries and displays an interactive list
 function accessCollection () {
 
 } //NOT COMPLETE
 
-//This function will add click functionality to all of our buttons and inputs
-
+// This function will add click functionality to all of our buttons and inputs
 function addObservers() {
     $("#hashtagbutton").on("click", summaryGenerate);
     $("#clearsummary").on("click", clearDelivery);
