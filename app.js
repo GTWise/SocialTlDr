@@ -2,7 +2,6 @@
 var Twitter = require('twitter');
 var config = require('./config.js');
 var T = new Twitter(config);
-var tweetal;
 
 const fs = require('fs');
 
@@ -37,4 +36,4 @@ function searchTweets(search){
   });
 }
 
-searchTweets('taco bell');
+searchTweets('insert-here');
