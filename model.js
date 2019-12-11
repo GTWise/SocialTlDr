@@ -8,45 +8,46 @@
 // Firebase tests
 var database = firebase.database();
 
-// To read
-// database.ref('directory here')
-// ex
 
-function readData() {
-    database.ref('private/hashtags/count').on('value', function (snapshot) {
-        console.log(snapshot.val());
-    })
+async function readUserData(username, callback) {
+
+    await database.ref('user/' + username).on('value', callback);
+
 }
-readData();
 
-// To write
-// database.ref('directory here').set({object})
-// ex
+function printUserData(snapshot) {
+    let password = snapshot.val().password;
+    let summarycount = snapshot.val().summarycount;
 
-function writeData() {
-    database.ref('public/').set({
-        username: 'cstamper',
-        food: 'sushi'
-    })
+    console.log(password);
+    console.log(summarycount);
 }
-writeData();
 
-// To delete
-// database.ref('directory here').remove()
-// ex
+async function tester(user) {
+    let result = await modelLogIn(user, "nonsense");
 
-function deleteData(username, cat) {
-    database.ref('user/' + username + '/' + cat).remove()
+    console.log(result);
 }
-deleteData('cstamper', 'favorites');
 
-// To update
-// database.ref('directory here').update()
-// ex
+async function modelLogIn(user, password) {
+    var result = {
+        username: undefined,
+        summarycount: undefined,
+        valid: false
+    };
+    
+    await database.ref('user/' + user).once('value').then(function(snapshot) {
+        let userpass = snapshot.val().password;
+        
+        console.log(userpass);
+        console.log(password);
 
-function updateData() {
-    var updates = {};
-    updates['/count'] = 5000;
-    database.ref('private/hashtags/').update(updates)
+        if (userpass == password) {
+            result.valid = true;
+            result.summarycount = snapshot.val().summarycount;
+            result.username = user;
+        }
+    });
+    return result;
+
 }
-updateData();
