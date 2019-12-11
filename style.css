@@ -38,6 +38,17 @@ body{
     left: 25%;
 }
 
+#multipurposesummarybox {
+    display: none;
+    position: relative;
+    background: purple;
+    text-align: center;
+    width: 70%;
+    height: 10em;
+    left: 15%;
+    overflow: scroll;
+}
+
 #headerbar{
     position: relative;
     background-color: rgb(30, 95, 117);

@@ -21,14 +21,6 @@ async function getTweets(hashtag, callback) {
 
 }
 
-$ curl --request GET 
- --url '' 
- --header 'authorization: OAuth oauth_consumer_key="consumer-key-for-app", 
- oauth_nonce="generated-nonce", oauth_signature="generated-signature", 
- oauth_signature_method="HMAC-SHA1", oauth_timestamp="generated-timestamp", 
- oauth_token="access-token-for-authed-user", oauth_version="1.0"'
-$ twurl /1.1/search/tweets.json?q=from%3Atwitterdev&result_type=mixed&count=2
-
 async function getSummary(text, callback) {
 
     let settings = {

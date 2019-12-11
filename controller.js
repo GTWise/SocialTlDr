@@ -14,7 +14,7 @@ async function twitterStepOne(searchTerm) {
     writeData('private/hashtags/' + searchTerm + '/count/', count);
 
     // Twitter api impl
-    return "This is Tweet Data";
+    await getTweets(searchTerm).then(twitterStepTwo);
 }
 
 // This function will use the MeaningCloud API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
@@ -138,7 +138,9 @@ async function signUpConc() {
     writeData('user/' + newuser, user);
 
     loggedinuser = newuser;
-
+    $("#login").html(newuser);
+    $("#login").off("click", logInInit);
+    $("#login").on("click", accountInit);
     accountInit();
 }
 
@@ -239,7 +241,7 @@ function nevermindConc() {
 // This function will create a new saved collection record under the User
 async function saveCollection() {
     // need jQuery to grab summarized text
-    var text = 'user';
+    var text = $("#delivery").val();
     // write text variable to database
     if (loggedinuser == undefined) {
         alert('You must be logged in to save a summary.');
@@ -258,8 +260,14 @@ function clearDelivery() {
 
 // Reads the user's collection of saved Summaries and displays an interactive list
 async function accessCollection() {
-    return await readData('user/' + loggedinuser + '/savedSummaries/');
-    // functional?
+    let result = await readData('user/' + loggedinuser + '/savedSummaries/');
+
+    console.log(result);
+
+    $("#multipurposesummarybox").append(result);
+
+
+
 }
 
 // This function will add click functionality to all of our buttons and inputs
