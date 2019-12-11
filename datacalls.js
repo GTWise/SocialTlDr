@@ -16,9 +16,7 @@ async function getTweets(hashtag, callback) {
             "accept": "application/json"
         }
     }
-    
     $.ajax(settings).done(callback);
-
 }
 
 async function getSummary(text, callback) {
@@ -34,7 +32,5 @@ async function getSummary(text, callback) {
             "accept": "application/json"
         }
     }
-    
     $.ajax(settings).done(callback);
-
 }

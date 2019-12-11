@@ -1,70 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css" />
     <title>Hashtag TL;DR</title>
 </head>
+
 <body>
     <section id="root">
-        <div id = "multipurposebox">
-            <div id = "multipurposeheader"><h3>Testing</h3></div>
-            <div id = "multipurposebody"><p>Insert Content Here</p></div>
-            <div id = "multipurposeinteractive"></div>
-            <div id = "multipurposesummarybox"></div>
+        <div id="multipurposebox">
+            <div id="multipurposeheader">
+                <h3>Testing</h3>
+            </div>
+            <div id="multipurposebody">
+                <p>Insert Content Here</p>
+            </div>
+            <div id="multipurposeinteractive"></div>
+            <div id="multipurposesummarybox"></div>
         </div>
-        <div id = "headerbar">
+        <div id="headerbar">
             <div id="headertext">#TL;DR</div>
             <div id="login">Log In</div>
         </div>
-        <div id = "logobar">
-            <div id = "logo"><img src = "images/tldrlogo.png" alt="logo"></div>
-            <div id = "tagline">Protecting Your Freetime: One # at a Time</div>
+        <div id="logobar">
+            <div id="logo"><img src="images/tldrlogo.png" alt="logo"></div>
+            <div id="tagline">Protecting Your Freetime: One # at a Time</div>
         </div>
-        <div id = "hashtaginput">
-            <p><b>Type in your desired Hashtag here:</b> <input id= "hashtaginputbox" type ="text" placeholder="Input Here" /></p>  
-            <p><b>Click Here to Generate Summary:</b> <input id = "hashtagbutton" type ="button" value="Generate" /></p>  
+        <div id="hashtaginput">
+            <p><b>Type in your desired Hashtag here:</b> <input id="hashtaginputbox" type="text"
+                    placeholder="Input Here" /></p>
+            <p><b>Click Here to Generate Summary:</b> <input id="hashtagbutton" type="button" value="Generate" /></p>
         </div>
-        <div id = "viewport">
-                <p><b>Here Is Your Hashtag Summary:</b></p>  
+        <div id="viewport">
+            <p><b>Here Is Your Hashtag Summary:</b></p>
             <textarea id="delivery" rows="30" cols="60">
             </textarea>
-        <div id = "viewportbuttons">
-            <input id = "savesummary" type ="button" value="Save this Summary" />
-            <input id = "clearsummary" type ="button" value="Clear this Summary" />
+            <div id="viewportbuttons">
+                <input id="savesummary" type="button" value="Save this Summary" />
+                <input id="clearsummary" type="button" value="Clear this Summary" />
+            </div>
         </div>
+        <div id="description">
+            <p>Simply type in your desired Twitter Hashtag to render a snapshot of all recent Tweets under that Hashtag
+                in an easily digestible TL;DR summary text.</p>
         </div>
-        <div id="description"><p>Simply type in your desired Twitter Hashtag to render a snapshot of all recent Tweets under that Hashtag in an easily digestible TL;DR summary text.</p></div>
     </section>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
 
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyAHtcZ5pjSAP9IMDhQs3PJTu4T-v-vqh2o",
-    authDomain: "tldrproject-3e298.firebaseapp.com",
-    databaseURL: "https://tldrproject-3e298.firebaseio.com",
-    projectId: "tldrproject-3e298",
-    storageBucket: "tldrproject-3e298.appspot.com",
-    messagingSenderId: "131994746131",
-    appId: "1:131994746131:web:d8f486f2e186bbd60e6ee6",
-    measurementId: "G-LCZBGV3H8V"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="datacalls.js"></script>
-<script src="model.js"></script>
-<script src="controller.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAHtcZ5pjSAP9IMDhQs3PJTu4T-v-vqh2o",
+            authDomain: "tldrproject-3e298.firebaseapp.com",
+            databaseURL: "https://tldrproject-3e298.firebaseio.com",
+            projectId: "tldrproject-3e298",
+            storageBucket: "tldrproject-3e298.appspot.com",
+            messagingSenderId: "131994746131",
+            appId: "1:131994746131:web:d8f486f2e186bbd60e6ee6",
+            measurementId: "G-LCZBGV3H8V"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="datacalls.js"></script>
+    <script src="model.js"></script>
+    <script src="controller.js"></script>
 
 </body>
+
 </html>

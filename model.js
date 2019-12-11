@@ -36,10 +36,6 @@ function updateData(path, value) {
     database.ref().update(updates)
 }
 
-async function readUserData(username, callback) {
-    await database.ref('user/' + username).on('value', callback);
-}
-
 async function modelLogIn(user, password) {
     var result = {
         username: undefined,
