@@ -63,9 +63,6 @@ async function modelLogIn(user, password) {
     
     await database.ref('user/' + user).once('value').then(function(snapshot) {
         let userpass = snapshot.val().password;
-        
-        console.log(userpass);
-        console.log(password);
 
         if (userpass == password) {
             result.valid = true;

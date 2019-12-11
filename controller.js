@@ -115,8 +115,6 @@ async function logInConc () {
         $("#login").on("click", accountInit);
         loggedinuser = call.username;
         accountInit();
-
-        console.log(loggedinuser);
     }
 
 } 
@@ -127,14 +125,15 @@ async function logInConc () {
 async function signUpConc () {
     // need jQuery object for username and password
 
+    let newuser = $("#username").val();
+    let newpassword = $("#userkey").val();
+
     // create user object
     var user = {
-        username: { // 'username' will be grabbed by jQuery
-            password: 'userPassword', // will be grabbed by jQuery
-            registration: 0, // get date
-            savedSummaries: 'text',
-            summaryCount: 0
-        }
+        password: newpassword, // will be grabbed by jQuery
+        registration: 0, // get date
+        savedSummaries: 'text',
+        summaryCount: 0
     }
 
     // Increase accounts by 1
@@ -142,7 +141,12 @@ async function signUpConc () {
     count++;
     updateData('public/accounts', count);
     // write new user to database
-    writeData('user/', user)
+    writeData('user/' + newuser, user);
+
+    loggedinuser = newuser;
+
+    accountInit();
+
 }
 
 // This function will retrieve the username from the database
@@ -169,7 +173,7 @@ function getCollectionCount() {
 // This function will bring up the delete user account box
 function deleteInit() {
 
-    let usernameinfo = getUsername(); //Retrieves username from database
+    let usernameinfo = loggedinuser; //Retrieves username from variable
     let usersinceinfo = getUserSince(); //Retrieves from a function that retrieves and processes the user's registration day
     let savedcollectioncount = getCollectionCount(); //Retrieves number of saved summaries and collections
 
@@ -191,20 +195,27 @@ function deleteInit() {
 }
 
 // This function will delete the user's account from the database
-async function deleteConc(username) { // either need username to be passed as param, or use jQuery to grab username
+async function deleteConc() { // either need username to be passed as param, or use jQuery to grab username
     // Firebase impl
-    deleteData('user/' + username);
+    deleteData('user/' + loggedinuser);
     // decrease accounts by 1
     var count = await readData('public/accounts/');
     count--;
     updateData('public/accounts', count);
     // NOTE: will decrease accounts by 1 even if user does not exist
+
+    loggedinuser = undefined;
+    $("#login").html("Log In");
+    $("#login").off("click", accountInit);
+    $("#login").on("click", logInInit);
+    nevermindConc();
+
 }
 
 // This function will bring up a "Log In" Box
 function accountInit() {
 
-    let usernameinfo = loggedinuser; //Retrieves username from database
+    let usernameinfo = loggedinuser; //Retrieves username from variable
     let usersinceinfo = getUserSince(); //Retrieves from a function that retrieves and processes the user's registration day
     let savedcollectioncount = getCollectionCount(); //Retrieves number of saved summaries and collections
 
@@ -269,4 +280,3 @@ function addObservers() {
 }
 
 addObservers();
-
