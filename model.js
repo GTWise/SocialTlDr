@@ -71,5 +71,4 @@ async function modelLogIn(user, password) {
         }
     });
     return result;
-
 }
