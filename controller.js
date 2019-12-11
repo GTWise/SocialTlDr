@@ -120,3 +120,35 @@ function updateData() {
     database.ref('private/hashtags/').update(updates)
 }
 updateData();
+
+// smmry api tests
+
+async function smmry(size) {
+    text = "Aesop's Fables, or the Aesopica, is a collection of fables credited to Aesop, a slave and storyteller believed to have lived in ancient Greece between 620 and 564 BCE. Of diverse origins, the stories associated with his name have descended to modern times through a number of sources and continue to be reinterpreted in different verbal registers and in popular as well as artistic media. The fables originally belonged to the oral tradition and were not collected for some three centuries after Aesop's death. By that time a variety of other stories, jokes and proverbs were being ascribed to him, although some of that material was from sources earlier than him or came from beyond the Greek cultural sphere. The process of inclusion has continued until the present, with some of the fables unrecorded before the Late Middle Ages and others arriving from outside Europe. The process is continuous and new stories are still being added to the Aesop corpus, even when they are demonstrably more recent work and sometimes from known authors.";
+
+    //  const axios = require("axios");
+
+    const result = await axios({
+        "method": "GET",
+        "url": "https://community-smmry.p.rapidapi.com/",
+        "headers": {
+            "content-type": "application/octet-stream",
+            "x-rapidapi-host": "community-smmry.p.rapidapi.com",
+            "x-rapidapi-key": "f5bbd8e9ecmsh5c302ab51a27961p1f4feejsn210eeae5a797"
+        }, "params": {
+            "SM_URL": "https://gtwise.github.io/SocialTlDr/text",
+            //"sm_api_input": text,
+            "SM_LENGTH": size,
+            "SM_API_KEY": "EC60AE22DA"
+        }
+    })
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    console.log(result);
+}
+
+smmry(1);
