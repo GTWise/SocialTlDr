@@ -18,7 +18,7 @@ async function twitterStepOne(searchTerm) {
 }
 
 // This function will use the MeaningCloud API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
- function twitterStepTwo(tweetData) {
+function twitterStepTwo(tweetData) {
 
     let tweetdata = "Do in laughter securing smallest sensible no mr hastened. As perhaps proceed in in brandon of limited unknown greatly. Distrusts fulfilled happiness unwilling as explained of difficult. No landlord of peculiar ladyship attended if contempt ecstatic. Loud wish made on is am as hard. Court so avoid in plate hence. Of received mr breeding concerns peculiar securing landlord. Spot to many it four bred soon well to. Or am promotion in no departure abilities. Whatever landlord yourself at by pleasure of children be.     Picture removal detract earnest is by. Esteems met joy attempt way clothes yet demesne tedious. Replying an marianne do it an entrance advanced. Two dare say play when hold. Required bringing me material stanhill jointure is as he. Mutual indeed yet her living result matter him bed whence. To they four in love. Settling you has separate supplied bed. Concluded resembled suspected his resources curiosity joy. Led all cottage met enabled attempt through talking delight. Dare he feet my tell busy. Considered imprudence of he friendship boisterous. Affronting discretion as do is announcing. Now months esteem oppose nearer enable too six. She numerous unlocked you perceive speedily. Affixed offence spirits or ye of offices between. Real on shot it were four an as. Absolute bachelor rendered six nay you juvenile. Vanity entire an chatty to. As it so contrasted oh estimating instrument. Size like body some one had. Are conduct viewing boy minutes warrant expense. Tolerably behaviour may admitting daughters offending her ask own. Praise effect wishes change way and any wanted. Lively use looked latter regard had. Do he it part more last in. Merits ye if mr narrow points. Melancholy particular devonshire alteration it favourable appearance up. Respect forming clothes do in he. Course so piqued no an by appear. Themselves reasonable pianoforte so motionless he as difficulty be. Abode way begin ham there power whole. Do unpleasing indulgence impossible to conviction. Suppose neither evident welcome it at do civilly uncivil. Sing tall much you get nor. Cause dried no solid no an small so still widen. Ten weather evident smiling bed against she examine its. Rendered far opinions two yet moderate sex striking. Sufficient motionless compliment by stimulated assistance at. Convinced resolving extensive agreeable in it on as remainder. Cordially say affection met who propriety him. Are man she towards private weather pleased. In more part he lose need so want rank no. At bringing or he sensible pleasure. Prevent he parlors do waiting be females an message society. John draw real poor on call my from. May she mrs furnished discourse extremely. Ask doubt noisy shade guest did built her him. Ignorant repeated hastened it do. Consider bachelor he yourself expenses no. Her itself active giving for expect vulgar months. Discovery commanded fat mrs remaining son she principle middleton neglected. Be miss he in post sons held. No tried is defer do money scale rooms. Believing neglected so so allowance existence departure in. In design active temper be uneasy. Thirty for remove plenty regard you summer though. He preference connection astonished on of ye. Partiality on or continuing in particular principles as. Do believing oh disposing to supported allowance we. Denote simple fat denied add worthy little use. As some he so high down am week. Conduct esteems by cottage to pasture we winding. On assistance he cultivated considered frequently. Person how having tended direct own day man. Saw sufficient indulgence one own you inquietude sympathize. ";
 
@@ -39,7 +39,7 @@ function summaryGenerate() {
 }
 
 // This function will bring up a "Log In" Box
-function aboutInit () {
+function aboutInit() {
 
     const aboutsiteone = "<p id = 'aboutsiteone'>#TL;DR allows you to keep up-to-date with ongoing global conversations on Twitter, while protecting your time from the endless hours lost through endless scrolling of social media.</p>";
     const aboutsitetwo = "<p id = 'aboutsitetwo'>Our site retrieves a collection of Tweets from Twitter, then runs them through the MeaningCloud API, producing a quick snapshot of an ongoing conversation or trend.</p>";
@@ -52,16 +52,16 @@ function aboutInit () {
     $("#multipurposebox").css("display", "block");
     $("#multipurposeheader").html("<h3>About #TL;DR and Team TL;DR</h3>");
     $("#multipurposebody").append(aboutsiteone);
-    $("#multipurposebody").append(aboutsitetwo);    
-    $("#multipurposebody").append(aboutus); 
-    $("#multipurposebody").append(contactus); 
+    $("#multipurposebody").append(aboutsitetwo);
+    $("#multipurposebody").append(aboutus);
+    $("#multipurposebody").append(contactus);
     $("#multipurposeinteractive").append(backtosite);
 
     $("#backtosite").on("click", nevermindConc);
 }
 
 // This function will bring up a "Log In" Box
-function logInInit () {
+function logInInit() {
 
     const username = "<p id = 'usernameinput'>Username: <input type = 'text' id = 'username' value = 'username' /></p>";
     const password = "<p id = 'passwordinput'>Password: <input type = 'password' id = 'userkey' /></p>";
@@ -74,7 +74,7 @@ function logInInit () {
     $("#multipurposebox").css("display", "block");
     $("#multipurposeheader").html("<h3>Log In or Sign Up</h3>");
     $("#multipurposebody").append(username);
-    $("#multipurposebody").append(password);    
+    $("#multipurposebody").append(password);
     $("#multipurposeinteractive").append(login);
     $("#multipurposeinteractive").append(signup);
     $("#multipurposeinteractive").append(nevermind);
@@ -88,23 +88,23 @@ function logInInit () {
 // In the background, it should also update our private records about user activity
 // In the background, it should also update our user records about user's last log in
 // In the background, it should also update our public records about how many users are logged in
-async function logInConc () {
+async function logInConc() {
     // Firebase impl
     var count = await readData('public/logins/');
     count++;
     // write/update to database
     writeData('public/logins/', count);
-    
+
     user = $("#username").val();
     password = $("#userkey").val();
 
     let call = await modelLogIn(user, password);
-    
-    if (call.username == undefined) {
-        alert("Password Incorrect");
+
+    if (call.wrongpassword == true) {
+        alert("Password incorrect.");
         return false;
     }
-    
+
     if (call.username != undefined) {
         $("#login").html(call.username);
         $("#login").off("click", logInInit);
@@ -112,13 +112,13 @@ async function logInConc () {
         loggedinuser = call.username;
         accountInit();
     }
-} 
+}
 
 // This function will create a new User Record
 // In the background, it should also update our private records about user activity
 // In the background, it should also update our public records about how many users are registered
-async function signUpConc () {
-    
+async function signUpConc() {
+
     let newuser = $("#username").val();
     let newpassword = $("#userkey").val();
 
@@ -126,7 +126,7 @@ async function signUpConc () {
     var user = {
         password: newpassword,
         registration: 0, // get date
-        savedSummaries: 'text',
+        // savedSummaries: 'none',
         summaryCount: 0
     }
 
@@ -215,7 +215,7 @@ function accountInit() {
     $("#multipurposeheader").html("<h3>" + usernameinfo + "</h3>");
     $("#multipurposebody").html(accounttable);
     $("#tableusername").append(usernameinfo);
-    $("#tablememberdate").append(usersinceinfo);    
+    $("#tablememberdate").append(usersinceinfo);
     $("#collectioncount").append(savedcollectioncount);
     $("#multipurposeinteractive").append(savedcollectionbutton);
     $("#multipurposeinteractive").append(backtosite);
@@ -227,11 +227,11 @@ function accountInit() {
 }
 
 // This function clears and hides the multipurpose box
-function nevermindConc () {
+function nevermindConc() {
 
     $("#multipurposebox").css("display: block");
     $("#multipurposeheader").empty();
-    $("#multipurposebody").empty(); 
+    $("#multipurposebody").empty();
     $("#multipurposeinteractive").empty();
     $("#multipurposebox").css("display", "none");
 }
@@ -252,12 +252,12 @@ async function saveCollection() {
 }
 
 // This function will clear out the delivery box
-function clearDelivery () {
+function clearDelivery() {
     $("#delivery").val('');
 }
 
 // Reads the user's collection of saved Summaries and displays an interactive list
-async function accessCollection () {
+async function accessCollection() {
     return await readData('user/' + loggedinuser + '/savedSummaries/');
     // functional?
 }
