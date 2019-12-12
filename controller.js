@@ -71,7 +71,7 @@ function summaryStepTwo(tweetData, param) {
 
     // will be removed after a functional step one
 
-    getWiki(tweetData, param, summaryStepThree);
+    getSummary(tweetData, param, summaryStepThree);
 }
 
 // This function will use the MeaningCloud API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
@@ -89,14 +89,16 @@ async function summaryStepThree(summaryresult) {
 
 function wikiStepThree(wikiresult) {
 
-    let result = "";
+    console.log(wikiresult);
 
-    for (let i = 0; i < wikiresult.length; i++) {
+    let cresult = "";
+
+    for (let i = 0; i < wikiresult.result.length; i++) {
         j = i.toString();
-        result = result + "<p>"+ wikiresult[i][i].title + ": " + wikiresult[i][i].url + "</p>"
+        cresult = cresult + "\n"+ wikiresult.result[i].title + ": " + wikiresult.result[i].url + "\n"
     }
-    console.log(result);
-    $("#delivery").val(result);
+    console.log(cresult);
+    $("#delivery").val(cresult);
 }
 
 // This function will bring up a "Log In" Box
