@@ -24,7 +24,6 @@ function wikiStepOne() {
     wikiStepTwo(searchTerm, "text");
 }
 
-
 // This function will use the MeaningCloud API to generate a condensed paragraph based on the text retrieved by wikiStepOne()
 function summaryStepTwo(tweetData, param) {
     getSummary(tweetData, param, summaryStepThree);
