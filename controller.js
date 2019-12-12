@@ -5,37 +5,98 @@
 
 var loggedinuser;
 
-async function twitterStepOne(searchTerm) {
+function summaryStepZero() {
+
+    let searchTerm = $("#urlinputbox").val();
+
     // Firebase impl
     // read count value
-    var count = await readData('private/hashtags/' + searchTerm + '/count/');
-    count++;
+//    var count = await readData('private/hashtags/' + searchTerm + '/count/');
+//    count++;
     // write/update to database
-    writeData('private/hashtags/' + searchTerm + '/count/', count);
+//    writeData('private/hashtags/' + searchTerm + '/count/', count);
 
     // Twitter api impl
-    await getTweets(searchTerm).then(twitterStepTwo);
+    summaryStepTwo(searchTerm, "url");
+}
+
+function summaryStepOne() {
+
+    let searchTerm = $("#hashtaginputbox").val();
+
+    // Firebase impl
+    // read count value
+//    var count = await readData('private/hashtags/' + searchTerm + '/count/');
+//    count++;
+    // write/update to database
+//    writeData('private/hashtags/' + searchTerm + '/count/', count);
+
+    // Twitter api impl
+    summaryStepTwo(searchTerm, "text");
+}
+
+function wikiStepZero() {
+
+    let searchTerm = $("#urlinputbox").val();
+
+    // Firebase impl
+    // read count value
+//    var count = await readData('private/hashtags/' + searchTerm + '/count/');
+//    count++;
+    // write/update to database
+//    writeData('private/hashtags/' + searchTerm + '/count/', count);
+
+    // Twitter api impl
+    wikiStepTwo(searchTerm, "url");
+}
+
+function wikiStepOne() {
+
+    let searchTerm = $("#hashtaginputbox").val();
+
+    // Firebase impl
+    // read count value
+//    var count = await readData('private/hashtags/' + searchTerm + '/count/');
+//    count++;
+    // write/update to database
+//    writeData('private/hashtags/' + searchTerm + '/count/', count);
+
+    // Twitter api impl
+    wikiStepTwo(searchTerm, "text");
+}
+
+
+// This function will use the MeaningCloud API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
+function summaryStepTwo(tweetData, param) {
+
+    // will be removed after a functional step one
+
+    getWiki(tweetData, param, summaryStepThree);
 }
 
 // This function will use the MeaningCloud API to generate a condensed paragraph based on the Tweets retrieved by twitterStepOne()
-function twitterStepTwo(tweetData) {
+function wikiStepTwo(tweetData, param) {
 
     // will be removed after a functional step one
-    let tweetdata = "Do in laughter securing smallest sensible no mr hastened. As perhaps proceed in in brandon of limited unknown greatly. Distrusts fulfilled happiness unwilling as explained of difficult. No landlord of peculiar ladyship attended if contempt ecstatic. Loud wish made on is am as hard. Court so avoid in plate hence. Of received mr breeding concerns peculiar securing landlord. Spot to many it four bred soon well to. Or am promotion in no departure abilities. Whatever landlord yourself at by pleasure of children be.     Picture removal detract earnest is by. Esteems met joy attempt way clothes yet demesne tedious. Replying an marianne do it an entrance advanced. Two dare say play when hold. Required bringing me material stanhill jointure is as he. Mutual indeed yet her living result matter him bed whence. To they four in love. Settling you has separate supplied bed. Concluded resembled suspected his resources curiosity joy. Led all cottage met enabled attempt through talking delight. Dare he feet my tell busy. Considered imprudence of he friendship boisterous. Affronting discretion as do is announcing. Now months esteem oppose nearer enable too six. She numerous unlocked you perceive speedily. Affixed offence spirits or ye of offices between. Real on shot it were four an as. Absolute bachelor rendered six nay you juvenile. Vanity entire an chatty to. As it so contrasted oh estimating instrument. Size like body some one had. Are conduct viewing boy minutes warrant expense. Tolerably behaviour may admitting daughters offending her ask own. Praise effect wishes change way and any wanted. Lively use looked latter regard had. Do he it part more last in. Merits ye if mr narrow points. Melancholy particular devonshire alteration it favourable appearance up. Respect forming clothes do in he. Course so piqued no an by appear. Themselves reasonable pianoforte so motionless he as difficulty be. Abode way begin ham there power whole. Do unpleasing indulgence impossible to conviction. Suppose neither evident welcome it at do civilly uncivil. Sing tall much you get nor. Cause dried no solid no an small so still widen. Ten weather evident smiling bed against she examine its. Rendered far opinions two yet moderate sex striking. Sufficient motionless compliment by stimulated assistance at. Convinced resolving extensive agreeable in it on as remainder. Cordially say affection met who propriety him. Are man she towards private weather pleased. In more part he lose need so want rank no. At bringing or he sensible pleasure. Prevent he parlors do waiting be females an message society. John draw real poor on call my from. May she mrs furnished discourse extremely. Ask doubt noisy shade guest did built her him. Ignorant repeated hastened it do. Consider bachelor he yourself expenses no. Her itself active giving for expect vulgar months. Discovery commanded fat mrs remaining son she principle middleton neglected. Be miss he in post sons held. No tried is defer do money scale rooms. Believing neglected so so allowance existence departure in. In design active temper be uneasy. Thirty for remove plenty regard you summer though. He preference connection astonished on of ye. Partiality on or continuing in particular principles as. Do believing oh disposing to supported allowance we. Denote simple fat denied add worthy little use. As some he so high down am week. Conduct esteems by cottage to pasture we winding. On assistance he cultivated considered frequently. Person how having tended direct own day man. Saw sufficient indulgence one own you inquietude sympathize. ";
 
-    getSummary(tweetdata, twitterStepThree);
+    getWiki(tweetData, param, wikiStepThree);
 }
 
 // This function will use jQuery to fill the textbox with the summary generated by twitterStepTwo()
-async function twitterStepThree(summaryresult) {
+async function summaryStepThree(summaryresult) {
     $("#delivery").val(summaryresult.summary);
 }
 
-// This function will control generating the Tweet summary by calling twitterStepOne(), Two(), and Three()
-function summaryGenerate() {
-    let searchTerm = $("#hashtaginputbox").val();
-    let firstresult = twitterStepOne(searchTerm);
-    let secondresult = twitterStepTwo(firstresult);
+function wikiStepThree(wikiresult) {
+
+    let result = "";
+
+    for (let i = 0; i < wikiresult.length; i++) {
+        j = i.toString();
+        result = result + "<p>"+ wikiresult[i][i].title + ": " + wikiresult[i][i].url + "</p>"
+    }
+    console.log(result);
+    $("#delivery").val(result);
 }
 
 // This function will bring up a "Log In" Box
@@ -144,7 +205,7 @@ async function signUpConc() {
 }
 
 // This function will bring up the delete user account box
-function deleteInit() {
+async function deleteInit() {
 
     let usernameinfo = loggedinuser; // Retrieves username from variable
     let usersinceinfo = await readData('user/' + loggedinuser + '/registration/'); // Retrieves from a function that retrieves and processes the user's registration day
@@ -183,12 +244,21 @@ async function deleteConc() {
     nevermindConc();
 }
 
+async function getAccountInfo() {
+    let userinfo = await readData('user/' + loggedinuser);
+
+    return userinfo;
+}
+
 // This function will bring up a "Log In" Box
-function accountInit() {
+async function accountInit() {
 
     let usernameinfo = loggedinuser; // Retrieves username from variable
-    let usersinceinfo = getUserSince(); // Retrieves from a function that retrieves and processes the user's registration day
-    let savedcollectioncount = getCollectionCount(); // Retrieves number of saved summaries and collections
+
+    let userinfo = await getAccountInfo();
+
+    let usersinceinfo = userinfo.registration; // Retrieves from a function that retrieves and processes the user's registration day
+    let savedcollectioncount = userinfo.summaryCount; // Retrieves number of saved summaries and collections
 
     const accounttable = "<table id = 'accounttable'><tr><td><b>Username:</b></td><td id = 'tableusername'></td></tr><tr><td><b>Member Since:</b></td><td id = 'tablememberdate'></td></tr><tr><td><b>Saved Collections</b></td><td id = 'collectioncount'></td></tr></table>";
     const savedcollectionbutton = "<input type = 'button' id = 'savedcollectiondisplay' value = 'Show Saved Summaries' />";
@@ -245,16 +315,28 @@ function clearDelivery() {
 // Reads the user's collection of saved Summaries and displays an interactive list
 async function accessCollection() {
     let result = await readData('user/' + loggedinuser + '/savedSummaries/');
-    $("#multipurposesummarybox").append(result);
+
+    $("#multipurposesummarybox").css("display", "block");
+
+    for (i = 1; i < result.length; i++) {
+        let entry = "<p class = 'summaryentry'>" + result[i] + "</p>";
+        let head = "<h5 class = 'summaryhead'>"+ (i).toString() + "</h5>"
+        $("#multipurposesummarybox").append(head);
+        $("#multipurposesummarybox").append(entry);
+    }
+
 }
 
 // This function will add click functionality to all of our buttons and inputs
 function addObservers() {
-    $("#hashtagbutton").on("click", summaryGenerate);
+    $("#hashtagbutton").on("click", summaryStepOne);
+    $("#urlbutton").on("click", summaryStepZero);
     $("#clearsummary").on("click", clearDelivery);
     $("#savesummary").on("click", saveCollection);
     $("#login").on("click", logInInit);
     $("#headertext").on("click", aboutInit);
+    $("#wikitextbutton").on("click", wikiStepOne);
+    $("#wikiurlbutton").on("click", wikiStepZero);
 }
 
 addObservers();

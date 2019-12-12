@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css" />
-    <title>Hashtag TL;DR</title>
+    <title>TL;DR</title>
 </head>
 
 <body>
     <section id="root">
         <div id="multipurposebox">
             <div id="multipurposeheader">
-                <h3>Testing</h3>
+                <h3></h3>
             </div>
             <div id="multipurposebody">
-                <p>Insert Content Here</p>
+                <p></p>
             </div>
             <div id="multipurposeinteractive"></div>
             <div id="multipurposesummarybox"></div>
@@ -26,15 +26,23 @@
         </div>
         <div id="logobar">
             <div id="logo"><img src="images/tldrlogo.png" alt="logo"></div>
-            <div id="tagline">Protecting Your Freetime: One # at a Time</div>
+            <div id="tagline">Protecting Your Freetime</div>
         </div>
         <div id="hashtaginput">
-            <p><b>Type in your desired Hashtag here:</b> <input id="hashtaginputbox" type="text"
-                    placeholder="Input Here" /></p>
+            <p><b>Paste in Your Desired Text here:</b> <input id="hashtaginputbox" type="text"
+                    placeholder="Input Text Here" /></p>
             <p><b>Click Here to Generate Summary:</b> <input id="hashtagbutton" type="button" value="Generate" /></p>
+            <p><b>Click Here to Generate Wikipedia Suggestions:</b> <input id="wikitextbutton" type="button" value="Generate" /></p>
         </div>
+        <div id="urlinput">
+                <p><b>Paste in Your Desired URL here:</b> <input id="urlinputbox" type="text"
+                        placeholder="Input URL Here" /></p>
+                <p><b>Click Here to Generate Summary:</b> <input id="urlbutton" type="button" value="Generate" /></p>
+                <p><b>Click Here to Generate Wikipedia Suggestions:</b> <input id="wikiurlbutton" type="button" value="Generate" /></p>
+            </div>
+    
         <div id="viewport">
-            <p><b>Here Is Your Hashtag Summary:</b></p>
+            <p><b>Here Is Your Text Summary:</b></p>
             <textarea id="delivery" rows="30" cols="60">
             </textarea>
             <div id="viewportbuttons">
@@ -43,7 +51,7 @@
             </div>
         </div>
         <div id="description">
-            <p>Simply type in your desired Twitter Hashtag to render a snapshot of all recent Tweets under that Hashtag
+            <p>Simply type in your desired text body or URL to render a snapshot of that text or article
                 in an easily digestible TL;DR summary text.</p>
         </div>
     </section>
