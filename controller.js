@@ -89,15 +89,17 @@ async function summaryStepThree(summaryresult) {
 
 function wikiStepThree(wikiresult) {
 
-    console.log(wikiresult);
-
     let cresult = "";
+
+    if (wikiresult.result == null) {
+        cresult = "No Current Wikipedia Suggestions";
+    }
 
     for (let i = 0; i < wikiresult.result.length; i++) {
         j = i.toString();
         cresult = cresult + "\n"+ wikiresult.result[i].title + ": " + wikiresult.result[i].url + "\n"
     }
-    console.log(cresult);
+
     $("#delivery").val(cresult);
 }
 
